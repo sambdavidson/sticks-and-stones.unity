@@ -1,0 +1,224 @@
+fileFormatVersion: 2
+guid: 6a739fbd730809a4986e05cdce1bd4f7
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: speechBubbleOpening
+    21300002: speechBubbleOpening_0
+    21300004: speechBubbleOpening_1
+    21300006: speechBubbleOpening_2
+    21300008: speechBubbleOpening_3
+    21300010: speechBubbleOpening_4
+    21300012: speechBubbleOpening_5
+    21300014: speechBubbleOpening_6
+    21300016: speechBubbleOpening_7
+    21300018: speechBubbleOpening_8
+    21300020: speechBubbleOpening_9
+    21300022: speechBubbleOpening_10
+    21300024: speechBubbleOpening_11
+    21300026: speechBubbleOpening_12
+    21300028: speechBubbleOpening_13
+    21300030: speechBubbleOpening_14
+    21300032: speechBubbleOpening_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: speechBubbleOpening_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 675
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 630
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 585
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 495
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 450
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 405
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 315
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 225
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 135
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 45
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: speechBubbleOpening_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 95
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
