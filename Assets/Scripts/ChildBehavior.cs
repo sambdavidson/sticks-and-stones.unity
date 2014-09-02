@@ -24,7 +24,7 @@ public class ChildBehavior : MonoBehaviour {
 	private Transform DPStart;
 	private Transform[] RunningPoints;
 	private Transform destinationPoint;
-	private Transform previousPoint;
+//	private Transform previousPoint;
 	private bool hasReachedStart;
 
 	// Use this for initialization
@@ -36,7 +36,6 @@ public class ChildBehavior : MonoBehaviour {
 //		audiosource = this.GetComponent<AudioSource>();
 		DPStart = GameObject.FindGameObjectWithTag("DPParent").transform.FindChild("StartingPoints").FindChild("StartingPoint1");
 		RunningPoints = GameObject.FindGameObjectWithTag("DPParent").transform.FindChild("RunningPoints").GetComponentsInChildren<Transform>();
-		previousPoint = this.transform;
 		
 		speechBubble = (GameObject) GameObject.Instantiate(speechBubble);
 		speechBubble.transform.position = this.transform.position;
@@ -146,6 +145,10 @@ public class ChildBehavior : MonoBehaviour {
 	}
 	
 	void OnDestroy() {
+	
+		if(Application.isEditor)
+			return; //This is to prevent a bunch of code from being run when I un-play the game in the Editor
+			
 		int clipIndex = Random.Range(0,painSounds.Length);
 		AudioSource.PlayClipAtPoint(painSounds[clipIndex],this.transform.position);
 		Destroy(speechBubble);

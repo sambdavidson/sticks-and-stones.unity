@@ -8,6 +8,7 @@ public class ControllerScript : MonoBehaviour {
 	
 	public AudioClip GetHim;
 	public AudioClip Winner;
+	public bool isDebug = false;
 	
 	private GameObject player;
 	private GameObject[] NPCs;

@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject attackPrefab;
 	public AudioClip[] weakAttackSound;
 	
+	private ControllerScript controller;
+	
 	//Thanks Flint Silver.
 	public float baseSpeed = 3;
 	public float baseSprint = 3;
@@ -46,6 +48,7 @@ public class PlayerControl : MonoBehaviour {
 	void Start () {
 		
 		//Find Objects and Components
+		controller = GameObject.Find("GlobalController").GetComponent<ControllerScript>();
 		ourLegs = this.transform.FindChild("Legs").gameObject;
 		animator = this.GetComponent<Animator>();
 		legAnimator = ourLegs.GetComponent<Animator>();
@@ -196,7 +199,8 @@ public class PlayerControl : MonoBehaviour {
 	void OnGUI() 
 	{
 		//Remove return to enable
-		return;
+		if(!controller.isDebug)
+			return;
 		//Draw Some Spriting Debug
 		GUIStyle ourStyle = new GUIStyle();
 		ourStyle.alignment = TextAnchor.UpperLeft;
