@@ -34,7 +34,6 @@ public class TextGeneration : MonoBehaviour {
 			currentLetterObj.transform.localPosition = new Vector3(currentXIndent,currentYIndent,0.0f);
 			currentXIndent += 0.35f;
 			int charToInt = 0;
-			print(curChar);
 			switch(curChar) {
 				case ' ':
 					charToInt = 0;

@@ -8,6 +8,7 @@ public class SelfEsteemController : MonoBehaviour {
 	public Shader shaderFlashWhite;
 	
 	private float health = 100.0f;
+    public float HPVal { get { return health; } set { health = value; if (health > 100.0) { health = 100.0f; } else if (health < 0.0f) { health = 0.0f; } } }
 	
 	//Shader Stuff
 	private SpriteRenderer spriteRenderer;
@@ -35,7 +36,7 @@ public class SelfEsteemController : MonoBehaviour {
 		esteemFace = this.transform.FindChild("EsteemFaces").gameObject;
 		faceSpriteRenderer = esteemFace.GetComponent<SpriteRenderer>();
 		faceAnimator = esteemFace.GetComponent<Animator>();
-		deactivate();
+		activate();
 		
 		//White Flash Shader
 		spriteRenderer.material.shader = shaderFlashWhite;
@@ -132,6 +133,10 @@ public class SelfEsteemController : MonoBehaviour {
 		faceSpriteRenderer.enabled = false;
 		
 	}
+    public void bounce(float amount)
+    {
+
+    }
 	//Hue shifting code. Stolen from http://beesbuzz.biz/code/hsv_color_transforms.php
 	private Color TransformHSV(
 		Color color,  // color to transform

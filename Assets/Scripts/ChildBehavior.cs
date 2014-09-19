@@ -76,7 +76,7 @@ public class ChildBehavior : MonoBehaviour {
 		}
 		//Keep the speechBubble's rotation fixed.
 		speechBubble.transform.rotation = Quaternion.identity;
-		
+
 		if(aiType == AiType.Running) {
 			//Look toward the destination;
 			var dir = destinationPoint.position - this.transform.position;

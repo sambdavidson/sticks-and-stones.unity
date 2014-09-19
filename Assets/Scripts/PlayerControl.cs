@@ -42,6 +42,9 @@ public class PlayerControl : MonoBehaviour {
 	//Our Leg Object
 	private GameObject ourLegs;
 
+    //Health - Self Esteem
+    private SelfEsteemController selfEsteem;
+
 
 
 	// Use this for initialization
@@ -53,6 +56,7 @@ public class PlayerControl : MonoBehaviour {
 		animator = this.GetComponent<Animator>();
 		legAnimator = ourLegs.GetComponent<Animator>();
 		audiosource = this.GetComponent<AudioSource>();
+        selfEsteem = GameObject.Find("SelfEsteemBadge").GetComponent<SelfEsteemController>();
 		
 		legAnimator.transform.localPosition = new Vector3(-0.15f,-0.1f,0.0f);
 		legAnimator.transform.localScale = new Vector3(1.0f,0.8f,1.0f);
@@ -195,7 +199,11 @@ public class PlayerControl : MonoBehaviour {
 
 	}
 
-	
+    public void AddHealth(float health) 
+    {
+        selfEsteem.HPVal += health;
+        selfEsteem.bounce(health);
+    }
 	void OnGUI() 
 	{
 		//Remove return to enable
