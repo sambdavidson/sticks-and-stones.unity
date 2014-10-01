@@ -91,7 +91,6 @@ public class ChildBehavior : MonoBehaviour {
 		if(!isActive)
 			return;
 
-		
 		// Move Us
 
 		if(aiType == AiType.Running) {

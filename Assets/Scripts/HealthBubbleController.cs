@@ -5,7 +5,7 @@ public class HealthBubbleController : MonoBehaviour {
 
     public float health = 10.0f;
     public float scale = 4.0f;
-
+    public bool persistent = false;
 
     private float timer = 0.0f;
 
@@ -25,12 +25,13 @@ public class HealthBubbleController : MonoBehaviour {
 
 	}
 
-    void OnTriggerEnter2D( Collider2D col)
+    void OnTriggerStay2D( Collider2D col)
     {
         if (col.tag == "Player")
         {
             col.gameObject.GetComponent<PlayerControl>().AddHealth(health);
-            Destroy(this.gameObject);
+            if(!persistent)
+                Destroy(this.gameObject);
         }
     }
 }

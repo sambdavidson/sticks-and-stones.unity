@@ -201,8 +201,9 @@ public class PlayerControl : MonoBehaviour {
 
     public void AddHealth(float health) 
     {
-        selfEsteem.HPVal += health;
-        selfEsteem.bounce(health);
+        selfEsteem.HPVal = selfEsteem.HPVal + health;
+        if(health >0)
+            selfEsteem.Bounce = 50f + (selfEsteem.HPVal / 2f);
     }
 	void OnGUI() 
 	{
@@ -210,9 +211,10 @@ public class PlayerControl : MonoBehaviour {
 		if(!controller.isDebug)
 			return;
 		//Draw Some Spriting Debug
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
 		GUIStyle ourStyle = new GUIStyle();
 		ourStyle.alignment = TextAnchor.UpperLeft;
-		GUI.Label( new Rect(10,10,150,150), "*Player Sprint Info*\n" + "isSprinting: " + isSpriting + "\nstamina: " + stamina + "\nisRecovered: " + isRecovered + "\nexhaustedTimer: " + exhaustTimer + "\nVelocity: " + rigidbody2D.velocity.magnitude, ourStyle);
+		GUI.Label( new Rect(screenPos.x,screenPos.y,150,150), "*Player Sprint Info*\n" + "isSprinting: " + isSpriting + "\nstamina: " + stamina + "\nisRecovered: " + isRecovered + "\nexhaustedTimer: " + exhaustTimer + "\nVelocity: " + rigidbody2D.velocity.magnitude, ourStyle);
 		
 	}
 

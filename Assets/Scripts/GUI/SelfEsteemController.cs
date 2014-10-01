@@ -7,7 +7,7 @@ public class SelfEsteemController : MonoBehaviour {
 	public ControllerScript controller;
 	public Shader shaderFlashWhite;
 	
-	private float health = 100.0f;
+	private float health = 10.0f;
     public float HPVal { get { return health; } set { health = value; if (health > 100.0) { health = 100.0f; } else if (health < 0.0f) { health = 0.0f; } } }
 	
 	//Shader Stuff
@@ -18,7 +18,8 @@ public class SelfEsteemController : MonoBehaviour {
 	private Color selfEsteemColor;
 	
 	private Vector3 localStartingPos;
-	
+    private Bounds startingBounds;
+
 	//Face
 	private GameObject esteemFace;
 	private SpriteRenderer faceSpriteRenderer;
@@ -28,14 +29,21 @@ public class SelfEsteemController : MonoBehaviour {
 	//JUICY stuff
 	private Quaternion startingRotation;
 	private float juiceTimer;
+    private float bounceValue;
+    private float actualBounce;
+    public float Bounce { get { return bounceValue; } set { bounceValue = value; if (bounceValue > 100.0) { bounceValue = 100.0f; } else if (bounceValue < 0.0f) { bounceValue = 0.0f; } flashTimer = 0.3f; } }
 	
 	// Use this for initialization
 	void Start () {
+        //Pre-activation setup
 		localStartingPos = this.transform.localPosition;
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		esteemFace = this.transform.FindChild("EsteemFaces").gameObject;
 		faceSpriteRenderer = esteemFace.GetComponent<SpriteRenderer>();
 		faceAnimator = esteemFace.GetComponent<Animator>();
+        startingBounds = spriteRenderer.bounds;
+        
+        //Activate
 		activate();
 		
 		//White Flash Shader
@@ -60,23 +68,7 @@ public class SelfEsteemController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.P)) {
 			deactivate();
 		}
-		if(Input.GetKey(KeyCode.L)) {
-			if(health < 100.0f) {
-				health += Time.deltaTime*30.0f;
-			}
-			if(health > 100.0f) {
-				health =  100.0f;
-
-			}
-		}
-		if(Input.GetKey(KeyCode.K)) {
-			if(health > 0.0f) {
-				health -= Time.deltaTime*30.0f;
-			}
-			if(health < 0.0f) {
-				health =  0.0f;
-			}
-		}
+        //END DEBUG
 		
 		//Check if we are flashing
 		if(flashTimer > 0.0f) {
@@ -114,17 +106,35 @@ public class SelfEsteemController : MonoBehaviour {
 				print("Emotion Switch Defaulted");
 				break;
 		}
-		//JUICY rotation
+
+        //JUICY JUICY JUICY 
+
+        //Rotation
 		juiceTimer += Time.deltaTime;
-		this.transform.Rotate(Vector3.forward, 0.05f * Mathf.Sin((3.0f * juiceTimer) + (Mathf.PI/2)));
+        float bounceValueMinimum = health / 10f;
+        if (bounceValue > bounceValueMinimum)
+        {
+            bounceValue -= (110f - health/2f) / 200f;
+        }
+        else
+        {
+            bounceValue = bounceValueMinimum;
+        }
+        actualBounce = Mathf.Lerp(actualBounce, bounceValue, 0.6f);
+		this.transform.Rotate(Vector3.forward, ( 0.07f )* Mathf.Sin((3.0f * juiceTimer) + (Mathf.PI/2)));
 		
+        //Bounce
+        this.transform.localScale = Vector2.one * (2.7f + Mathf.Abs(((actualBounce / 100.0f)/2f) * Mathf.Sin((3.0f * juiceTimer) + (Mathf.PI / 2))));
+        
+        //Change the pivot of the bounce.
+        this.transform.localPosition = new Vector3(localStartingPos.x - (startingBounds.size.x / 2) + (spriteRenderer.bounds.size.x / 2), localStartingPos.y - (startingBounds.size.y / 2) + (spriteRenderer.bounds.size.y / 2), localStartingPos.z);
+
 	}
 	// Does a fancy enable animation
 	public void activate() {
 		spriteRenderer.enabled = true;
 		faceSpriteRenderer.enabled = true;
 		flashTimer = flashLength;
-		flashAmount = 1.0f;
 	
 	}
 	//Disables the banner
@@ -133,10 +143,6 @@ public class SelfEsteemController : MonoBehaviour {
 		faceSpriteRenderer.enabled = false;
 		
 	}
-    public void bounce(float amount)
-    {
-
-    }
 	//Hue shifting code. Stolen from http://beesbuzz.biz/code/hsv_color_transforms.php
 	private Color TransformHSV(
 		Color color,  // color to transform

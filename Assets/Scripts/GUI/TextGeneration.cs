@@ -21,9 +21,19 @@ public class TextGeneration : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.O)){
+		if(Input.GetKeyDown(KeyCode.T)){
 			createLetterObjects();
 		}
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Transform[] childrens = this.transform.GetComponentsInChildren<Transform>();
+            foreach (Transform tra in childrens)
+            {
+                Destroy(tra.gameObject);
+            }
+
+        }
+
 
 	
 	}

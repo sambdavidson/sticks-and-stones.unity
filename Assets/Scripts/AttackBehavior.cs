@@ -4,6 +4,7 @@ using System.Collections;
 public class AttackBehavior : MonoBehaviour {
 
 	public float lifeSpan = 0.1f;
+    public AudioClip punchSound;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +22,10 @@ public class AttackBehavior : MonoBehaviour {
 		if(col.tag == "NPC") {
 			if(col.gameObject.GetComponent<ChildBehavior>().aiType == ChildBehavior.AiType.Running)
 				Destroy (col.gameObject);
+            if (col.gameObject.GetComponent<ChildBehavior>().aiType == ChildBehavior.AiType.Waving) { 
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>().AddHealth(10f);
+                AudioSource.PlayClipAtPoint(punchSound, this.transform.position);
+            }
 		}
 	}
 }
