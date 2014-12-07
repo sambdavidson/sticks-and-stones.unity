@@ -141,7 +141,6 @@ public class PlayerControl : MonoBehaviour {
 		}
 		
 		//Attacking
-		
 		//Get State Info
 		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 		
@@ -170,9 +169,6 @@ public class PlayerControl : MonoBehaviour {
 			
 		}
 		animator.SetBool("isAttacking",isAttacking);
-		
-		
-	
 	
 	}
 

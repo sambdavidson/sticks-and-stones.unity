@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class ControllerScript : MonoBehaviour {
@@ -15,12 +16,9 @@ public class ControllerScript : MonoBehaviour {
 	
 	private GameObject InteractableObj;
 	private bool canInteract;
-	
-	//Cutscene Stuff
-	private bool isInCutscene;
-	private float cutsceneTimer;
-	private float cutsceneLength;
-	private Cutscene cutsceneID;
+
+    private bool isInCutscene;
+
 	
 	//GUI Stuff
 	private GameObject largeWords;
@@ -34,7 +32,6 @@ public class ControllerScript : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		NPCs = GameObject.FindGameObjectsWithTag("NPC");
 		largeWords = GameObject.Find("LargeWords");
-		
 		
 		UnPauseGameplay();
 	
@@ -98,6 +95,7 @@ public class ControllerScript : MonoBehaviour {
 	
 	}
 	public void TriggerCutscene(Cutscene sceneToTrigger) {
+
 		//First time with the first kid
 		if(sceneToTrigger == Cutscene.FirstKid) {
 			isInCutscene = true;
@@ -107,7 +105,9 @@ public class ControllerScript : MonoBehaviour {
 			PauseGameplay();
 		}
 	}
-	
+	/// <summary>
+	/// Pauses all NPCs and relevant objects and updates gamestate.
+	/// </summary>
 	public void PauseGameplay() {
 
 		player.GetComponent<PlayerControl>().isActive = false;
@@ -115,10 +115,13 @@ public class ControllerScript : MonoBehaviour {
 			npc.GetComponent<ChildBehavior>().isActive = false;
 		}
 		gameState = 0;
-		if(isInCutscene)
+		if(isInCutscene) // what is the nature of the pause
 			gameState = 2;
 		
 	}
+    /// <summary>
+    /// Unpauses all NPCs and relevant objects and updates the gamestate.
+    /// </summary>
 	public void UnPauseGameplay() {
 
 		player.GetComponent<PlayerControl>().isActive = true;
@@ -140,20 +143,45 @@ public class ControllerScript : MonoBehaviour {
 			GUI.TextArea(new Rect(Screen.width/2 - 50,Screen.height/2 - 25,100,50),"PAUSED");
 		
 		//cutscene debug
-		if(isInCutscene) {
-			GUI.TextArea(new Rect(Screen.width/2 - 50,Screen.height/2 - 25,100,70),"Cutscene where you are insulted: " + (cutsceneLength - cutsceneTimer));
-		}
+	    if (isInCutscene)
+	    {
+	        GUI.TextArea(new Rect(Screen.width/2 - 50, Screen.height/2 - 25, 100, 70),
+	            (cutsceneLength - cutsceneTimer).ToString());
+
+            //configure gui for cutscene black bars
+            Texture2D texture = new Texture2D(1, 1);
+            texture.SetPixel(0, 0, Color.black);
+            texture.Apply();
+            GUI.skin.box.normal.background = texture;
+	        if (cutsceneBlackBarPercent < 1.0f)
+	        {
+                //Expand out the black bars
+	            cutsceneBlackBarPercent = Mathf.Lerp(cutsceneBlackBarPercent, 1.0f, 0.03f);
+
+	        }
+	    }
+	    else
+	    {
+            //Shrink  the black bars
+            cutsceneBlackBarPercent = Mathf.Lerp(cutsceneBlackBarPercent, 0.0f, 0.1f);
+	    }
+        //Draw black bars
+        GUI.Box(new Rect(0, 0, Screen.width, cutsceneBlackBarPercent * 75.0f), GUIContent.none);
+        GUI.Box(new Rect(0, Screen.height - (75.0f * cutsceneBlackBarPercent), Screen.width, 100), GUIContent.none);
 	}
 	
-	//Draw the stupid editor image
+	/// <summary>
+	/// Editor image drawing
+	/// </summary>
 	void OnDrawGizmos() {
-		Gizmos.DrawIcon(transform.position, "controller.png", true);
+		Gizmos.DrawIcon(transform.position, "controller.png", true); //Make the controller visible in the editor.
 	}
 	
-	//Cutscene Enumerations
-	public enum Cutscene {
-		StartOfDay,
-		FirstKid,
-		RevisitFirstKid
-	}
+}
+//Cutscene Enumerations
+public enum Cutscene
+{
+    StartOfDay,
+    FirstKid,
+    RevisitFirstKid
 }
