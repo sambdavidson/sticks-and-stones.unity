@@ -151,8 +151,7 @@ public class ChildBehavior : MonoBehaviour {
 		int clipIndex = Random.Range(0,painSounds.Length);
 		AudioSource.PlayClipAtPoint(painSounds[clipIndex],this.transform.position);
 		Destroy(speechBubble);
-		GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().refreshNPCs();
-		GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().win();
+		GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().removeNPC(this.gameObject);
 		Destroy(gameObject);
 	}
 	public void ChangeState(AiType toType) {

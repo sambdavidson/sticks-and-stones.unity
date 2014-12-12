@@ -39,15 +39,22 @@ public class PlayerControl : MonoBehaviour {
 	//Our AudioSource
 	private AudioSource audiosource;
 	
-	//Our Leg Object
+	/// <summary>
+    /// The object for the players legs
+	/// </summary>
 	private GameObject ourLegs;
 
-    //Health - Self Esteem
+    /// <summary>
+    /// The controller component of the self esteem badge.
+    /// Essentially the health bar.
+    /// </summary>
     private SelfEsteemController selfEsteem;
 
 
 
-	// Use this for initialization
+	/// <summary>
+    /// Use this for initialization
+	/// </summary>
 	void Start () {
 		
 		//Find Objects and Components
@@ -203,14 +210,14 @@ public class PlayerControl : MonoBehaviour {
     }
 	void OnGUI() 
 	{
-		//Remove return to enable
-		if(!controller.isDebug)
-			return;
-		//Draw Some Spriting Debug
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
-		GUIStyle ourStyle = new GUIStyle();
-		ourStyle.alignment = TextAnchor.UpperLeft;
-		GUI.Label( new Rect(screenPos.x,screenPos.y,150,150), "*Player Sprint Info*\n" + "isSprinting: " + isSpriting + "\nstamina: " + stamina + "\nisRecovered: " + isRecovered + "\nexhaustedTimer: " + exhaustTimer + "\nVelocity: " + rigidbody2D.velocity.magnitude, ourStyle);
+		
+	    if (controller.isDebug) //Draw some debug information.
+	    {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            GUIStyle ourStyle = new GUIStyle();
+            ourStyle.alignment = TextAnchor.UpperLeft;
+            GUI.Label(new Rect(screenPos.x, screenPos.y, 150, 150), "*Player Sprint Info*\n" + "isSprinting: " + isSpriting + "\nstamina: " + stamina + "\nisRecovered: " + isRecovered + "\nexhaustedTimer: " + exhaustTimer + "\nVelocity: " + rigidbody2D.velocity.magnitude, ourStyle);
+	    }
 		
 	}
 
