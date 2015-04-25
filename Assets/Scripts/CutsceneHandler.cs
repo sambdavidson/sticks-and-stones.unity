@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class CutsceneHandler : MonoBehaviour
 {
@@ -9,18 +10,27 @@ public class CutsceneHandler : MonoBehaviour
     public CutsceneCallback CutsceneFinishedCallback;
     
     public AudioClip GetHim;
+    public GameObject cutscenePrefab;
+
+    /// <summary>
+    /// First Kid Cutscene
+    /// </summary>
+    public Sprite PlayerSpriteNeutral;
+    public Sprite GreensterSpriteNeutral;
+
 
     /// <summary>
     /// Cutscene stuff
     /// </summary>
-    private bool isInCutscene;
-
+    private bool inCutscene;
     private bool cutsceneStarted = false;
-    private float cutsceneLength;
+    private bool skip = false;
     private Cutscene cutsceneID;
     private float cutsceneBlackBarPercent;
 
-    //GUI Stuff
+    /// <summary>
+    /// GUI Stuff
+    /// </summary>
     private GameObject largeWords;
     private float largeWordsTimer;
 
@@ -43,16 +53,20 @@ public class CutsceneHandler : MonoBehaviour
 	void Update () {
 
         //Cutscene stuff
-        if (isInCutscene) //Check if we are in a cutscene
+        if (inCutscene) //Check if we are in a cutscene
         {
             if (cutsceneStarted) //Check if the cutscene has actually begun.
             {
+                if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    skip = true;
+                }
                 return;
             }
             if (cutsceneID == Cutscene.FirstKid) //Check the cutscene and start it.
             {
                 cutsceneStarted = true;
-                StartCoroutine("SceneFirstKid"); //Blocking cutscene.
+                StartCoroutine(SceneFirstKid());
             }
         }
         else 
@@ -74,7 +88,7 @@ public class CutsceneHandler : MonoBehaviour
     void OnGUI()
     {
         //Cutscene Prep
-        if (isInCutscene)
+        if (inCutscene)
         {
 
             //configure gui for cutscene black bars
@@ -113,8 +127,8 @@ public class CutsceneHandler : MonoBehaviour
         //First time with the first kid
         if (scene == Cutscene.FirstKid)
         {
-            isInCutscene = true;
-            cutsceneLength = 3.0f;
+            GameObject.Find("SelfEsteemBadge").GetComponent<SelfEsteemController>().deactivate();
+            inCutscene = true;
             cutsceneID = scene;
             controller.PauseGameplay();
         }
@@ -124,19 +138,48 @@ public class CutsceneHandler : MonoBehaviour
 
     private void FinishedCutscene(Cutscene scene)
     {
-        isInCutscene = false;
+        GameObject.Find("SelfEsteemBadge").GetComponent<SelfEsteemController>().activate();
+        inCutscene = false;
+        cutsceneStarted = false;
         controller.UnPauseGameplay();
         CutsceneFinishedCallback(scene);
     }
 
     private IEnumerator SceneFirstKid()
     {
+        // Create the player object.
+        GameObject playerObject = (GameObject)Instantiate(cutscenePrefab);
+        SpriteRenderer playerRenderer = playerObject.GetComponent<SpriteRenderer>();
+        playerRenderer.enabled = true;
+        playerRenderer.sprite = PlayerSpriteNeutral;
+        Transform playerTransform = playerObject.GetComponent<Transform>();
+
+        // Create the kid object.
+        GameObject kidObject = (GameObject)Instantiate(cutscenePrefab);
+        SpriteRenderer kidRenderer = kidObject.GetComponent<SpriteRenderer>();
+        kidRenderer.enabled = true;
+        kidRenderer.sprite = GreensterSpriteNeutral;
+        Transform kidTransform = kidObject.GetComponent<Transform>();
+        yield return new WaitForSeconds(1.0f);
+        Vector3 kidDestination = new Vector3(Camera.main.GetComponent<Transform>().position.x + 4.0f,
+            Camera.main.GetComponent<Transform>().position.y - 2.0f);
+        kidTransform.position = new Vector3(kidDestination.x + 14.0f, kidDestination.y);
+        Vector3 playerDestination = new Vector3(Camera.main.GetComponent<Transform>().position.x - 4.0f,
+    Camera.main.GetComponent<Transform>().position.y - 2.0f);
+        playerTransform.position = new Vector3(playerDestination.x - 14.0f, playerDestination.y);
+        while (playerTransform.position.x < playerDestination.x - 0.01f) //Move the characters into position
+        {        
+            playerTransform.position = Vector3.Lerp(new Vector3(playerTransform.position.x, playerTransform.position.y), playerDestination, 0.05f);
+            kidTransform.position = Vector3.Lerp(new Vector3(kidTransform.position.x, kidTransform.position.y), kidDestination, 0.1f);
+
+            yield return new WaitForSeconds(0.016f);//60fps
+        }
         yield return new WaitForSeconds(2.0f);
         largeWords.GetComponent<SpriteRenderer>().enabled = true;
-        AudioSource.PlayClipAtPoint(GetHim, player.transform.position);     
-        yield return new WaitForSeconds(2.0f);
+        // AudioSource.PlayClipAtPoint(GetHim, player.transform.position);     
         largeWords.GetComponent<SpriteRenderer>().enabled = false;
-        cutsceneStarted = false;
+        Destroy(playerObject);
+        Destroy(kidObject);
         FinishedCutscene(Cutscene.FirstKid);
     }
 }
